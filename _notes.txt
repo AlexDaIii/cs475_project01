@@ -1,0 +1,16 @@
+There are no unlabled data so we don't have to pre-process that type of data
+
+bio.train - 284 features, 284 useful, 2000 training examples, normalization (max X is 44)
+    (standardize) max: 44.71017781221589, min: -1.0191839793138975
+easy.train - 10 features, 10 useful, 900 examples, standardize data (gets better loss)
+    (standardize) max: 3.771062324022551, min: -3.629691951551705
+finance.train - 46 features, 46 useful, 550 training examples, standardize data (gets better loss)
+    (standardize) max: 17.95894130677154, min: -3.349958540373614
+hard.train - 94 features, 94 useful, 900 examples, standardize data
+    (standardize) max: 4.38436264109483, min: -4.726133990766483
+nlp.train - 54471 features, 1000 examples, normalize (max X is 31)
+    (standardize) max: 31.606961258558965, min: -0.92040958659559
+speech.train - 617 features, 617 "useful", 400 training examples, standardize
+    (standardize) max: 17.972433664476377, min: -6.983893867834724
+vision.train - 19 features, 18 useful, 500 training examples, standardize
+    (standardize) max: 11.668342100980727, min: -5.723733151147001
