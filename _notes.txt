@@ -10,7 +10,9 @@ hard.train - 94 features, 94 useful, 900 examples, standardize data
     (standardize) max: 4.38436264109483, min: -4.726133990766483
 nlp.train - 54471 features, 1000 examples, normalize (max X is 31)
     (standardize) max: 31.606961258558965, min: -0.92040958659559
+    very slow if we have regularization - probably because we initialize an identity matrix that is like 54000 big
 speech.train - 617 features, 617 "useful", 400 training examples, standardize
     (standardize) max: 17.972433664476377, min: -6.983893867834724
 vision.train - 19 features, 18 useful, 500 training examples, standardize
     (standardize) max: 11.668342100980727, min: -5.723733151147001
+    do we remove column?

@@ -26,8 +26,10 @@ class GradientDescent(Optimizer):
         :param x: the input
         :return: the new weights
         """
+        # TODO: Add back grad
         cost, grad = costFunc(W, y, x, self.decay)
         # performs
         # W' = W - a(grad)
+        # TODO: Uncomment out
         wp = W - np.multiply(self.learning_rate, grad)
         return wp, cost

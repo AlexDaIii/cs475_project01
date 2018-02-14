@@ -14,8 +14,6 @@ class PerceptronCrossEntropy(CostFunction):
     # h(x) = g(x, W) = sigmoid(x, W)
     # dj/dWij = (1/m)*sum{1}{m}[(h(x) - y) * x] + (lambda/m)*[(L * W)]
     # L = I (with L[0,0] = 0)
-
-    # UNIT TEST PASSED
     def cost(self, W, x, y, decay=0.0):
         """
         Computes the cross entropy loss and the gradient with the sigmoid activation function for the batch
@@ -41,28 +39,10 @@ class PerceptronCrossEntropy(CostFunction):
         # calculates ((1 - y) * log(1 - h(x)))
         cost2 = np.matmul(np.transpose(np.ones((m, 1)) - y), np.log(np.ones((m, 1)) - g.activation_function(z)))
 
-        # regularization
-        # creates a row vector of ones the size of W
-        idt = np.ones((1, np.size(W, 0)))
-        # TODO: Change this to 0 when we add bias
-        idt[0] = 1
-        # calculates (lambda/2*m)*||(W)||^2, no regularization on the bias term
-        reg = np.multiply((decay/(2*m)), np.matmul(idt, np.power(W, 2)))
-
-        # cross entropy with regularization, output is R1, a scalar
-        j = (1/m) * (cost1 - cost2) + reg
+        j = (1/m) * (cost1 - cost2)
 
         # calculates the gradient
         # (1/m)*(h(x) - y) * x
-        grad1 = np.multiply(1/m, np.matmul(x.T, g.activation_function(z) - y))
-
-        # calculates the regularization term's gradient (lambda/m)*[(L * W)]
-        idn = np.identity(np.size(W, 0))
-        # TODO: Change this to 0 when we add bias
-        idn[0, 0] = 1
-        grad2 = np.multiply((decay/m), np.matmul(idn, W))
-
-        # cross entropy gradient
-        grad = grad1 - grad2
+        grad = np.multiply(1/m, np.matmul(x.T, g.activation_function(z) - y))
 
         return j, grad
