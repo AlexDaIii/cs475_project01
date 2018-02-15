@@ -1,6 +1,6 @@
 import numpy as np
 from _parse import load_wine_csv
-from cost_function import PerceptronCrossEntropy
+from cost_function import CrossEntropy
 
 cost_at_initial_W = 0.693
 grad_at_initial_W = np.array([-0.1000, -12.0092, -11.2628])
@@ -15,7 +15,7 @@ X, Y = load_wine_csv("_data.txt")
 
 X = np.append(np.ones((len(X), 1)), X, 1)
 
-per = PerceptronCrossEntropy()
+per = CrossEntropy()
 cost, grad = per.cost(initial_W, X, Y)
 
 print("Cost at initial W (zeros): " + str(cost))

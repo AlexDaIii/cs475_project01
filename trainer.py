@@ -12,7 +12,7 @@ class Trainer(object):
         self.step = 1
 
     def train(self, X, y, decay=0.0, n_epoch=10, learning_rate=0.001, batch_size=None, show_metric=True,
-              cost_fun=cost_function.PerceptronCrossEntropy()):
+              cost_fun=cost_function.CrossEntropy()):
         """
         Trains the model
         :param cost_fun: The cost function we use, default is the only one we have
@@ -26,7 +26,7 @@ class Trainer(object):
         :return: the trained weights
         """
         weights = np.zeros((np.size(X, 1), 1))
-        # TODO: In future may want to change this if implementing other optimizers
+
         opt = GradientDescent(decay=decay, learning_rate=learning_rate)
         if batch_size is None:
             batch_size = np.size(X, 0)
@@ -40,9 +40,10 @@ class Trainer(object):
 
             # split into k mini batches
             for i in range(k - 1):
+
                 weights, cost = opt.optimize(cost_fun.cost, weights,
                                              X[i * batch_size:(i + 1) * batch_size, :],
-                                             y[i * batch_size:(i + 1) * batch_size, :])
+                                             y[i * batch_size:(i + 1) * batch_size, :], i)
                 # display message
                 if show_metric:
                     print("Batch: " + str(i) + "/" + str(k) + ", Cost: " + str(cost))
@@ -50,7 +51,7 @@ class Trainer(object):
             # the last rows to grad descent
             weights, cost = opt.optimize(cost_fun.cost, weights,
                                          X[(k - 1) * batch_size:, :],
-                                         y[(k - 1) * batch_size:, :])
+                                         y[(k - 1) * batch_size:, :], k)
             self.step += 1
             # display message
             if show_metric:

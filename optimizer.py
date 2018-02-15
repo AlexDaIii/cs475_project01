@@ -6,7 +6,7 @@ class Optimizer(object):
     def __init_subclass__(cls, **kwargs):
         pass
 
-    def optimize(self, func, W, y, x):
+    def optimize(self, **kwargs):
         raise NotImplementedError()
 
 
@@ -17,7 +17,7 @@ class GradientDescent(Optimizer):
         self.decay = decay
         pass
 
-    def optimize(self, costFunc, W, y, x):
+    def optimize(self, costFunc, W, x, y, batch):
         """
         Performs gradient descent
         :param costFunc: the cost function
@@ -27,9 +27,10 @@ class GradientDescent(Optimizer):
         :return: the new weights
         """
         # TODO: Add back grad
-        cost, grad = costFunc(W, y, x, self.decay)
+        cost, grad = costFunc(W, x, y, batch, self.decay)
         # performs
         # W' = W - a(grad)
+        # print(W)
         # TODO: Uncomment out
         wp = W - np.multiply(self.learning_rate, grad)
         return wp, cost

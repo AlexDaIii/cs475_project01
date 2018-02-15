@@ -1,6 +1,6 @@
 import numpy as np
 from trainer import Trainer
-from cost_function import PerceptronCrossEntropy
+from cost_function import CrossEntropy
 
 class Model(object):
 
@@ -110,11 +110,12 @@ class Perceptron(Model):
         self.col_deleted = col_deleted
         to_train = Trainer()
         self.weights = to_train.train(X, y, decay=decay, n_epoch=n_epoch, learning_rate=learning_rate,
-                                      batch_size=batch_size, cost_fun=PerceptronCrossEntropy())
+                                      batch_size=batch_size, cost_fun=CrossEntropy())
         pass
 
     def predict(self, X):
         # TODO: Write code to make predictions.
+        X = X.todense()
         z = np.matmul(X, self.weights)
         y_hat = np.zeros((np.size(X, 0), 1))
         # if z >= 0, then predict y = 1
