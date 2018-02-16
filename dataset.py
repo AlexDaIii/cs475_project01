@@ -71,3 +71,12 @@ def data_preprocessing_project01(x, fileName):
     else:
         x = standardize(x)
     return x
+
+
+def data_preprocess_y(y):
+
+    for idx in range(len(y)):
+        if y[idx] == 0:
+            y[idx] = -1
+
+    return y

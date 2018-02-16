@@ -27,7 +27,7 @@ class GradientDescent(Optimizer):
         :return: the new weights
         """
         # TODO: Add back grad
-        cost, grad = costFunc(W, x, y, batch, self.decay)
+        cost, grad = costFunc(W, x, y)
         # performs
         # W' = W - a(grad)
         # print(W)

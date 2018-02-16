@@ -62,6 +62,7 @@ def main():
             model = models.Perceptron()
             X = X.todense()
             y = y.reshape(len(y), 1)
+            y = ds.data_preprocess_y(y)
             X = ds.data_preprocessing_project01(X, args.data)
         else:
             raise Exception('The model given by --model is not yet supported.')

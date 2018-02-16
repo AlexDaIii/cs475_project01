@@ -1,6 +1,6 @@
 import numpy as np
 from trainer import Trainer
-from cost_function import CrossEntropy
+from cost_function import ZeroOneLoss
 
 class Model(object):
 
@@ -106,16 +106,32 @@ class Perceptron(Model):
         pass
 
     def fit(self, X, y, col_deleted, decay=0.0, n_epoch=5, learning_rate=1.0, batch_size=1):
+        self.num_input_features = X.shape[1]
+
         # TODO: Write code to fit the model.
         self.col_deleted = col_deleted
         to_train = Trainer()
         self.weights = to_train.train(X, y, decay=decay, n_epoch=n_epoch, learning_rate=learning_rate,
-                                      batch_size=batch_size, cost_fun=CrossEntropy())
+                                      batch_size=batch_size, cost_fun=ZeroOneLoss())
         pass
 
     def predict(self, X):
-        # TODO: Write code to make predictions.
         X = X.todense()
+        # print()
+        # print(X.shape)
+        # print(self.num_input_features)
+        # print(self.weights.shape)
+
+        num_examples, num_input_features = X.shape
+        if num_input_features < self.num_input_features:
+            # print(self.num_input_features - num_input_features)
+            temp = np.zeros((num_examples, self.num_input_features - num_input_features))
+            X = np.append(X, temp, 1)
+            # print(X.shape)
+        if num_input_features > self.num_input_features:
+            X = X[:, :self.num_input_features]
+
+        # TODO: Write code to make predictions.
         z = np.matmul(X, self.weights)
         y_hat = np.zeros((np.size(X, 0), 1))
         # if z >= 0, then predict y = 1

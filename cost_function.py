@@ -4,7 +4,7 @@ from activation import Sigmoid
 
 class CostFunction(object):
 
-    def cost(self, **kwargs):
+    def cost(self, W, x, y):
         raise NotImplementedError()
 
 
@@ -12,14 +12,14 @@ class CrossEntropy(CostFunction):
 
     # J = (1/m) * sum{1}{m}[((-y * log(h(x)) - ((1 - y) * log(1 - h(x)))] + (lambda/2*m)*||(W)||^2
     # h(x) = g(x, W) = sigmoid(x, W)
-    # dj/dWij = (1/m)*sum{1}{m}[(h(x) - y) * x] + (lambda/m)*[(L * W)]
+    # dJ/dWij = (1/m)*sum{1}{m}[(h(x) - y) * x] + (lambda/m)*[(L * W)]
     # L = I (with L[0,0] = 0)
     def cost(self, W, x, y):
         """
         Computes the cross entropy loss and the gradient with the sigmoid activation function for the batch
-        :param W: the weights into the layer ∈ R^len(a+1)*len(a)
-        :param x: the inputs into the layer ∈ R^len(a)
-        :param y: the expected output of the neuron
+        :param W: Weights ∈ R^num_features
+        :param x: the inputs ∈ R^m*num_features
+        :param y: the outputs ∈ R^m
         :return: the cost, the gradient
         """
 
@@ -30,7 +30,7 @@ class CrossEntropy(CostFunction):
         m = np.size(y, 0)
 
         # calculate unregularized cost
-        z = np.dot(x, W)
+        z = np.matmul(x, W)
 
         # calculates (-y * log(h(x)) y = 0
         cost1 = -y.T * np.log(g.activation_function(z))
@@ -47,7 +47,36 @@ class CrossEntropy(CostFunction):
         return j, grad
 
 
-class PerceptronOneZero(CostFunction):
+class ZeroOneLoss(CostFunction):
 
-    def cost(self, weights, x, y):
-        pass
+    # J = sum{1}{m}(max(-y * W' * x))
+    # dJ/dWij = (y - y_hat)x = (y - W' * x) * x
+    def cost(self, W, x, y):
+        """
+        Calculates the zero one loss for the batch
+        :param W: Weights ∈ R^num_features
+        :param x: the inputs ∈ R^m*num_features
+        :param y: the outputs ∈ R^m
+        :return: the cost, the gradient
+        """
+
+        z = np.matmul(x, W)
+        for idx in range(len(z)):
+            if z[idx] >= 0:
+                z[idx] = 1
+            else:
+                z[idx] = -1
+            # print("z: " + str(z))
+
+        # print("y: " + str(y))
+        j = np.matmul(-y.T, z)
+        # print("jb: " + str(j))
+        j = max(np.array([0]), j)
+        # print("ja: " + str(j))
+
+        grad = np.zeros((np.size(x, 1), 1))
+        if j != 0:
+            grad = x.T * y
+        # print(grad[0:3])
+
+        return j, -grad
