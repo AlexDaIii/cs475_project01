@@ -10,8 +10,12 @@ X = X.todense()
 Y = Y.reshape(len(Y), 1)
 
 # X = ds.data_preprocessing_project01(X, fileName)
-X = ds.normalize(X)
-Y = ds.data_preprocess_y(Y)
+# X = ds.normalize(X)
+# Y = ds.data_preprocess_y(Y)
+
+print(X.shape)
 
 model = Perceptron()
-W = model.fit(X, Y, None, n_epoch=5)
+W = model.fit(X, Y, n_epoch=5, batch_size=np.size(X, 0))
+
+

@@ -63,12 +63,14 @@ def main():
             X = X.todense()
             y = y.reshape(len(y), 1)
             y = ds.data_preprocess_y(y)
-            X = ds.data_preprocessing_project01(X, args.data)
+            # X = ds.standardize(X)
+            # X = ds.normalize(X)
         else:
             raise Exception('The model given by --model is not yet supported.')
 
+        # TODO: Add args so they can change things
         # Train the model.
-        model.fit(X, y, None)
+        model.fit(X, y)
 
         # Save the model.
         try:

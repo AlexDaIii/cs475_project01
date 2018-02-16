@@ -1,6 +1,7 @@
 # Data normalization and cleanup as data pre-processing
 import numpy as np
 from numpy import matlib
+import warnings
 
 
 def standardize(x):
@@ -34,10 +35,13 @@ def standardize(x):
 
 def normalize(x):
     """
+    DOES NOT WORK
     Normalizes the data. x' = (X-mu)/(X max-Xmin)
     :param x: The data to normalize
     :return: The normalized x
     """
+
+    warnings.warn("Doesn't work - use standardize instead until I fix the x - mu part", Warning)
 
     # want a row vector so we can repmat it downwards
     maximum = np.amax(x, 0)
@@ -57,19 +61,11 @@ def normalize(x):
         col += 1
 
     # x - mu
+    # NOTE: Fix this
     x = x - np.matlib.repmat(mu, np.size(x, 0), 1)
     # divide the entire matrix by sigma
     x = np.divide(x, np.matlib.repmat(maximum - minimum, np.size(x, 0), 1))
 
-    return x
-
-
-def data_preprocessing_project01(x, fileName):
-    to_normalize = {'bio.train', 'nlp.train', 'datasets/bio.train', 'datasets/nlp.train'}
-    if to_normalize.issubset(set(dir(fileName))):
-        x = normalize(x)
-    else:
-        x = standardize(x)
     return x
 
 
