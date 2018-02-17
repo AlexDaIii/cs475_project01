@@ -3,16 +3,14 @@ import math
 from optimizer import GradientDescent
 import cost_function
 
-""" A model trainer """
-
 
 class Trainer(object):
 
     def __init__(self):
         self.step = 1
 
-    def train(self, X, y, decay=0.0, n_epoch=10, learning_rate=0.001, batch_size=None, show_metric=True,
-              cost_fun=cost_function.CrossEntropy()):
+    def train(self, X, y, decay=0.0, n_epoch=5, learning_rate=1, batch_size=None, show_metric=True,
+              cost_fun=cost_function.LogLoss()):
         """
         Trains the model
         :param cost_fun: The cost function we use, default is the only one we have
@@ -43,7 +41,7 @@ class Trainer(object):
 
                 weights, cost = opt.optimize(cost_fun.cost, weights,
                                              X[i * batch_size:(i + 1) * batch_size, :],
-                                             y[i * batch_size:(i + 1) * batch_size, :], i)
+                                             y[i * batch_size:(i + 1) * batch_size, :])
                 # display message
                 if show_metric:
                     print("Batch: " + str(i) + "/" + str(k) + ", Cost: " + str(cost))
@@ -51,7 +49,7 @@ class Trainer(object):
             # the last rows to grad descent
             weights, cost = opt.optimize(cost_fun.cost, weights,
                                          X[(k - 1) * batch_size:, :],
-                                         y[(k - 1) * batch_size:, :], k)
+                                         y[(k - 1) * batch_size:, :])
             self.step += 1
             # display message
             if show_metric:

@@ -21,8 +21,10 @@ def get_args():
     parser.add_argument("--predictions-file", type=str, help="The predictions file to create. (Only used for testing.)")
 
     # TODO: Add optional command-line arguments as necessary.
+    # changes learning_rate
     parser.add_argument("--online-learning-rate", type=float, help="The learning rate for perceptron",
                         default=1.0)
+    # changes n_epoch
     parser.add_argument("--online-training-iterations", type=int,
                         help="The number of training iterations for online methods.", default=5)
 
@@ -63,14 +65,13 @@ def main():
             X = X.todense()
             y = y.reshape(len(y), 1)
             y = ds.data_preprocess_y(y)
-            # X = ds.standardize(X)
-            # X = ds.normalize(X)
+        elif args.algorithm.lower() == 'sumoffeatures':
+            model = models.SumOfFeatures()
         else:
             raise Exception('The model given by --model is not yet supported.')
 
-        # TODO: Add args so they can change things
         # Train the model.
-        model.fit(X, y)
+        model.fit(X, y, learning_rate=args.online_learning_rate, n_epoch=args.online_training_iterations)
 
         # Save the model.
         try:

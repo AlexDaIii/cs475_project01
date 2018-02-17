@@ -42,7 +42,7 @@ hard.train - 94 features, 94 useful, 900 examples, standardize data
     Accuracy: 0.534444 (481/900)
     Accuracy: 0.540000 (54/100)
 
-    WITH STandardization
+    WITH Standardization
     Accuracy: 0.548889 (494/900)
     Accuracy: 0.450000 (45/100)
 

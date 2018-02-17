@@ -8,7 +8,7 @@ class CostFunction(object):
         raise NotImplementedError()
 
 
-class CrossEntropy(CostFunction):
+class LogLoss(CostFunction):
 
     # J = (1/m) * sum{1}{m}[((-y * log(h(x)) - ((1 - y) * log(1 - h(x)))] + (lambda/2*m)*||(W)||^2
     # h(x) = g(x, W) = sigmoid(x, W)
@@ -61,22 +61,21 @@ class ZeroOneLoss(CostFunction):
         """
 
         z = np.matmul(x, W)
+        # does y_hat = sign(W' * x)
         for idx in range(len(z)):
             if z[idx] >= 0:
                 z[idx] = 1
             else:
                 z[idx] = -1
-            # print("z: " + str(z))
 
-        # print("y: " + str(y))
+        # does sum{1}{m}(-y * W' * x)
         j = np.matmul(-y.T, z)
-        # print("jb: " + str(j))
+        # does max(-y * W' * x) - actually the order might be wrong but it works on batch size of 1
         j = max(np.array([0]), j)
-        # print("ja: " + str(j))
 
+        # computes y * x, if cost > 0 - its wrong
         grad = np.zeros((np.size(x, 1), 1))
         if j != 0:
             grad = x.T * y
-        # print(grad[0:3])
 
         return j, -grad

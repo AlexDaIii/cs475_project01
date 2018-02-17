@@ -1,7 +1,8 @@
 import numpy as np
 from trainer import Trainer
 from cost_function import ZeroOneLoss
-import dataset as ds
+import math
+
 
 class Model(object):
 
@@ -38,7 +39,7 @@ class Useless(Model):
         self.reference_example = None
         self.reference_label = None
 
-    def fit(self, X, y):
+    def fit(self, X, y, n_epoch=5, learning_rate=1.0, batch_size=1):
         self.num_input_features = X.shape[1]
         # Designate the first training example as the 'reference' example
         # It's shape is [1, num_features]
@@ -85,58 +86,58 @@ class SumOfFeatures(Model):
 
     def __init__(self):
         super().__init__()
-        # TODO: Initializations etc. go here.
         pass
 
-    def fit(self, X, y):
+    def fit(self, X, y, n_epoch=5, learning_rate=1.0, batch_size=1):
         # NOTE: Not needed for SumOfFeatures classifier. However, do not modify.
         pass
 
     def predict(self, X):
-        # TODO: Write code to make predictions.
-        pass
+        num_examples, self.num_input_features = X.shape
+        y_hat = np.zeros((num_examples, 1))
+        beginning = np.sum(X[:, 0:math.floor(X.shape[1] / 2)], 1)
+        end = np.sum(X[:, math.ceil(X.shape[1]/2):], 1)
+        for idx in range(num_examples):
+            if beginning[idx] > end[idx]:
+                y_hat[idx] = 1
+            else:
+                y_hat[idx] = 0
+        return y_hat
 
 
 class Perceptron(Model):
 
     def __init__(self):
         super().__init__()
-        # TODO: Initializations etc. go here.
+        # Initializations
         self.weights = None
         pass
 
     def fit(self, X, y, decay=0.0, n_epoch=5, learning_rate=1.0, batch_size=1):
         self.num_input_features = X.shape[1]
 
-        # TODO: Write code to fit the model.
+        # fits the model.
         to_train = Trainer()
         self.weights = to_train.train(X, y, decay=decay, n_epoch=n_epoch, learning_rate=learning_rate,
-                                      batch_size=batch_size, cost_fun=ZeroOneLoss())
+                                      batch_size=batch_size, cost_fun=ZeroOneLoss(), show_metric=False)
         pass
 
     def predict(self, X):
         X = X.todense()
-        # print()
-        # print(X.shape)
-        # print(self.num_input_features)
-        # print(self.weights.shape)
-
-        # X = ds.standardize(X)
-        # X = ds.normalize(X)
 
         num_examples, num_input_features = X.shape
+        # if num input features less, then append zeros
         if num_input_features < self.num_input_features:
-            # print(self.num_input_features - num_input_features)
             temp = np.zeros((num_examples, self.num_input_features - num_input_features))
             X = np.append(X, temp, 1)
-            # print(X.shape)
+        # if the num input features greater, get rid of some features
         if num_input_features > self.num_input_features:
             X = X[:, :self.num_input_features]
 
-        # TODO: Write code to make predictions.
+        # code to make predictions.
         z = np.matmul(X, self.weights)
         y_hat = np.zeros((np.size(X, 0), 1))
-        # if z >= 0, then predict y = 1
+        # if z >= 0, then predict y = 1, else 0
         for idx in range(0, np.size(X, 0) - 1):
             if z[idx] >= 0:
                 y_hat[idx] = 1
