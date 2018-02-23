@@ -59,6 +59,7 @@ nlp.train - 54471 features, 1000 examples, normalize (max X is 31)
     NA - too slow
 
 speech.train - 617 features, 617 useful, 400 training examples, standardize?
+
     (standardize) max: 17.972433664476377, min: -6.983893867834724
     WITHOUT Standardization
     Accuracy: 0.925000 (370/400)
