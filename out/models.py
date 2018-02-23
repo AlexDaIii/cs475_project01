@@ -1,6 +1,6 @@
 import numpy as np
-from trainer import Trainer
-from cost_function import ZeroOneLoss
+from out.trainer import Trainer
+from out.cost_function import ZeroOneLoss
 import math
 
 

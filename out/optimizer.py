@@ -1,6 +1,12 @@
+__author__ = "Alexander Chang"
+__jhed__ = "achang56"
+__email__ = "achang56@jhu.edu"
+__class__ = "cs475"
+
+
 import numpy as np
 
-
+# Does the optimization strategy
 class Optimizer(object):
 
     def __init_subclass__(cls, **kwargs):

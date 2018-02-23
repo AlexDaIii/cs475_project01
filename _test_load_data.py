@@ -1,7 +1,6 @@
-from data import load_data
-from models import Perceptron
+from out.data import load_data
+from out.models import Perceptron
 import numpy as np
-import dataset as ds
 
 fileName = "datasets/bio.train"
 X, Y = load_data(fileName)

@@ -1,3 +1,9 @@
+__author__ = "Alexander Chang"
+__jhed__ = "achang56"
+__email__ = "achang56@jhu.edu"
+__class__ = "cs475"
+
+
 # Data normalization and cleanup as data pre-processing
 import numpy as np
 from numpy import matlib

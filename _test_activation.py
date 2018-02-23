@@ -1,4 +1,4 @@
-import activation
+from out import activation
 import numpy as np
 
 act = activation.Sigmoid()

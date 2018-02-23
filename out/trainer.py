@@ -1,7 +1,13 @@
+__author__ = "Alexander Chang"
+__jhed__ = "achang56"
+__email__ = "achang56@jhu.edu"
+__class__ = "cs475"
+
+
 import numpy as np
 import math
-from optimizer import GradientDescent
-import cost_function
+from out.optimizer import GradientDescent
+from out import cost_function
 
 
 class Trainer(object):

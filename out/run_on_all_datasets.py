@@ -1,6 +1,6 @@
 import os
 
-ALGORITHM = 'sumoffeatures'
+ALGORITHM = 'perceptron'
 DATA_DIR = 'datasets'
 OUTPUT_DIR = 'output'
 DATASETS = ['easy', 'hard', 'bio', 'finance', 'nlp', 'speech', 'vision']
