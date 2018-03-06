@@ -1,5 +1,5 @@
-from out.data import load_data
-from out.models import Perceptron
+from data import load_data
+from models import Perceptron
 import numpy as np
 
 fileName = "datasets/bio.train"

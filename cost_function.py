@@ -5,7 +5,7 @@ __class__ = "cs475"
 
 
 import numpy as np
-from out.activation import Sigmoid
+from activation import Sigmoid
 
 
 class CostFunction(object):

@@ -1,10 +1,12 @@
-import os
 import argparse
+import os
 import pickle
+
 import numpy as np
 
-from out import models, dataset as ds
-from out.data import load_data
+import dataset as ds
+import models
+from data import load_data
 
 
 def get_args():

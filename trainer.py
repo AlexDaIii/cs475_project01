@@ -6,8 +6,8 @@ __class__ = "cs475"
 
 import numpy as np
 import math
-from out.optimizer import GradientDescent
-from out import cost_function
+from optimizer import GradientDescent
+import cost_function
 
 
 class Trainer(object):
@@ -15,11 +15,11 @@ class Trainer(object):
     def __init__(self):
         self.step = 1
 
-    def train(self, X, y, decay=0.0, n_epoch=5, learning_rate=1, batch_size=None, show_metric=True,
-              cost_fun=cost_function.LogLoss()):
+    def train(self, X, y, decay=0.0, n_epoch=5, learning_rate=1, batch_size=None, show_metric=False,
+              cost_fun=cost_function.ZeroOneLoss()):
         """
         Trains the model
-        :param cost_fun: The cost function we use, default is the only one we have
+        :param cost_fun: The cost function we use, default is the only one we should have
         :param show_metric: If we display the batch and the cost
         :param X: The inputs
         :param y: The outputs
